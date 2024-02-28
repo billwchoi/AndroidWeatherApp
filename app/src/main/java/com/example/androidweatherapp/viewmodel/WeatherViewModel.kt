@@ -59,12 +59,6 @@ class WeatherViewModel @Inject constructor(
     // Callback for receiving location updates
     private var locationCallback: LocationCallback
 
-    // A state flow to hold the current location data
-    private val _currentLocation = MutableStateFlow(LatLng(38.804836, -77.046921))
-    val currentLocation: StateFlow<LatLng> = _currentLocation.asStateFlow()
-
-//    private val locationRequested = MutableStateFlow(false)
-
     companion object {
         var secondStartLocationUpdates = false
         var locationRequested = false
@@ -73,7 +67,6 @@ class WeatherViewModel @Inject constructor(
         var locationLongitude = 0.0
         var landingScreenLoaded = false
         var dataLoaded = false
-        var isLoading = false
     }
 
     init {
@@ -85,8 +78,6 @@ class WeatherViewModel @Inject constructor(
                 locationResult.locations.firstOrNull()?.let { location ->
 
                     if (!locationUpdated) {
-                        _currentLocation.value = LatLng(location.latitude, location.longitude)
-
                         locationLatitude = location.latitude
                         locationLongitude = location.longitude
 
@@ -162,21 +153,6 @@ class WeatherViewModel @Inject constructor(
                     }
                 }
             }
-
-//            val response = weatherApi.getWeather25(locationLatitude, locationLongitude, API_KEY, UNIT)
-//
-//            // Switching context to the Main thread for UI operations
-//            withContext(Dispatchers.Main) {
-//                if (response.isSuccessful) {
-//                    // Updating the state flow with the received data
-//                    weather25DataFlow.value = response.body()
-//                    dataLoaded = true
-//                } else {
-//                    // Handling errors
-//                    onError(response.message())
-//                    dataLoaded = true
-//                }
-//            }
         }
     }
 
@@ -205,21 +181,6 @@ class WeatherViewModel @Inject constructor(
                     }
                 }
             }
-
-//            val response = weatherApi.getForecast25(locationLatitude, locationLongitude, API_KEY, UNIT)
-//
-//            // Switching context to the Main thread for UI operations
-//            withContext(Dispatchers.Main) {
-//                if (response.isSuccessful) {
-//                    // Updating the state flow with the received data
-//                    forecast25DataFlow.value = response.body()
-//                    dataLoaded = true
-//                } else {
-//                    // Handling errors
-//                    onError(response.message())
-//                    dataLoaded = true
-//                }
-//            }
         }
     }
 
